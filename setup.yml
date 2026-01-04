@@ -35,6 +35,7 @@
   - name: create authorized file and set permissions
     file:
       path: /home/user/.ssh/authorized_keys
+      state: touch
       owner: user
       group: user
       mode: '0600'
