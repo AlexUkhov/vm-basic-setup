@@ -3,7 +3,7 @@
 #
 #
 #
-
+echo "./dir_to_ignore/" > .gitignore
 mkdir -p ./dir_to_ignore/
 touch ./dir_to_ignore/hosts.txt
 
@@ -35,5 +35,5 @@ done
 ansible-playbook -i ./dir_to_ignore/hosts.txt setup.yml
 
 # clear sensitive data
-    unset vm${i}_ip_address
-    unset vm${i}_password
+#    unset vm${i}_ip_address
+ #   unset vm${i}_password
