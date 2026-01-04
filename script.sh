@@ -20,7 +20,7 @@ for (( i=1; i<=server_count; i++ )); do
     echo "Check your $i server ip: " $ip_address
     echo "Check your $i server password: " $password
     echo "[server_$i]" >> ./dir_to_ignore/hosts.txt
-    echo "$ip_address ansible_user=root ansible_password=${password}" >> ./dir_to_ignore/hosts.txt
+    echo "vm$i ansible_host=$ip_address ansible_user=root ansible_password=${password} ansible_connection=password" >> ./dir_to_ignore/hosts.txt
     unset ip_address
     unset password
 done
