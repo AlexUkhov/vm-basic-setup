@@ -1,5 +1,5 @@
 ---
-- name: Test Connection to my servers
+- name: Configure servers
   hosts: all
   become: yes
   
@@ -7,3 +7,40 @@
   
   - name: Ping my servers
     ping:
+
+  - name: add user
+    user:
+      name: user
+      state: present
+      shell: /bin/bash
+      groups: sudo
+      append: yes
+
+  - name: accept sudoers
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "user ALL=(ALL) NOPASSWD:ALL\n"
+      mode: '0440'
+
+  - name: update apt cache
+    apt:
+      update_cache: yes 
+
+  - name: install openssh-server
+    apt:
+      name: openssh-server
+      state: present
+      update_cache: yes
+
+  - name: ssh copy id
+    copy:
+      src: ./dir_to_ignore/id_rsa.pub
+      dest: /home/user/.ssh/authorized_keys
+      owner: user
+      group: user
+      mode: '0600'
+
+  - name: deny password authentication
+    shell: |
+      sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+      systemctl restart sshd

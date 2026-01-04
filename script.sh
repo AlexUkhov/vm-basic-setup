@@ -36,4 +36,4 @@ cat ./dir_to_ignore/hosts.txt
 ansible-playbook -i ./dir_to_ignore/hosts.txt setup.yml
 
 # clear sensitive data
-
+echo " " > ./dir_to_ignore/hosts.txt
