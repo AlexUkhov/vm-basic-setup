@@ -34,13 +34,13 @@
 
   - name: ssh copy id
     copy:
-      src: ./dir_to_ignore/id_rsa.pub
+      src: ./dir_to_ignore/server_key_1.pub
       dest: /home/user/.ssh/authorized_keys
       owner: user
       group: user
       mode: '0600'
 
-  - name: deny password authentication
-    shell: |
-      sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-      systemctl restart sshd
+  #- name: deny password authentication
+  #  shell: |
+  #    sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+  #    systemctl restart sshd
