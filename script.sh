@@ -15,25 +15,22 @@ for (( i=1; i<=server_count; i++ )); do
     ssh-keygen -t rsa -b 4096 -f "./dir_to_ignore/server_key_$i" -N ""
 #    echo "Generated key pair for server $i: server_key_$i and server_key_$i.pub"
     
-    read -p "Enter your $i server ip address: " vm_ip_address
-    read -sp "Enter your $i server password: " vm_password && echo
-    echo "Check your $i server ip: " $vm_ip_address
-    echo "Check your $i server password: " $vm_password
-
-done
-
-
-# ansible configuration
-apt update && apt install -y ansible
-for (( i=1; i<=server_count; i++ )); do
+    read -p "Enter your $i server ip address: " ip_address
+    read -sp "Enter your $i server password: " password && echo
+    echo "Check your $i server ip: " $ip_address
+    echo "Check your $i server password: " $password
     echo "[server_$i]" >> ./dir_to_ignore/hosts.txt
-    echo "$vm_ip_address ansible_user=root ansible_ssh_pass=${vm_password}" >> ./dir_to_ignore/hosts.txt
-    #unset vm_ip_address
-    #unset vm_password
+    echo "$ip_address ansible_user=root ansible_password=${password}" >> ./dir_to_ignore/hosts.txt
+    unset ip_address
+    unset password
 done
 
+# DEBUG
+cat ./dir_to_ignore/hosts.txt
+
+
+# run ansible playbook
 ansible-playbook -i ./dir_to_ignore/hosts.txt setup.yml
 
 # clear sensitive data
-#    unset vm${i}_ip_address
- #   unset vm${i}_password
+
