@@ -15,6 +15,38 @@
       shell: /bin/bash
       groups: sudo
       append: yes
+  
+  - name: create home directory and set permissions
+    file:
+      path: /home/user
+      state: directory
+      owner: user
+      group: user
+      mode: '0755'
+
+  - name: create .ssh directory and set permissions
+    file:
+      path: /home/user/.ssh
+      state: directory
+      owner: user
+      group: user
+      mode: '0700'
+
+  - name: create authorized file and set permissions
+    file:
+      path: /home/user/.ssh/authorized_keys
+      owner: user
+      group: user
+      mode: '0600'
+
+  - name: ssh copy id
+    copy:
+      src: ./dir_to_ignore/server_key_1.pub
+      dest: /home/user/.ssh/authorized_keys
+      owner: user
+      group: user
+      mode: '0600'
+
 
   - name: accept sudoers
     copy:
@@ -32,15 +64,38 @@
       state: present
       update_cache: yes
 
-  - name: ssh copy id
-    copy:
-      src: ./dir_to_ignore/server_key_1.pub
-      dest: /home/user/.ssh/authorized_keys
-      owner: user
-      group: user
-      mode: '0600'
+
 
   #- name: deny password authentication
   #  shell: |
   #    sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
   #    systemctl restart sshd
+
+- name: copy ssh keys to local machine
+  hosts: localhost
+  tasks:
+    - name: copy private ssh key to .ssh on local machine
+      fetch:
+        src: ./dir_to_ignore/server_key_1
+        dest: ${HOME}/.ssh/server_key_1
+        flat: yes
+    
+    - name: set permissions on private ssh key
+      file:
+        path: ${HOME}/.ssh/server_key_1
+        owner: ${USER}
+        group: ${USER}
+        mode: '0600'
+
+    - name: copy public ssh key to .ssh on local machine
+      fetch:
+        src: ./dir_to_ignore/server_key_1.pub
+        dest: ${HOME}/.ssh/server_key_1.pub
+        flat: yes
+      
+    - name: set permissions on public ssh key
+      file:
+        path: ${HOME}/.ssh/server_key_1.pub
+        owner: ${USER}
+        group: ${USER}
+        mode: '0600'
