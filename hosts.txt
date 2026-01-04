@@ -1,2 +1,0 @@
-[servers]
-vm1 ansible_host=
