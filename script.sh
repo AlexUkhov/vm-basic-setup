@@ -3,9 +3,12 @@
 #
 #
 #
+
 echo "./dir_to_ignore/" > .gitignore
 mkdir -p ./dir_to_ignore/
 touch ./dir_to_ignore/hosts.txt
+apt install sshpass
+apt install ansible
 
 # data aggregation
 read -p "How many servers you want to create? " server_count
