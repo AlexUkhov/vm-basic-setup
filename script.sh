@@ -7,6 +7,7 @@
 echo "./dir_to_ignore/" > .gitignore
 mkdir -p ./dir_to_ignore/
 touch ./dir_to_ignore/hosts.txt
+# touch ./hostnames
 apt install sshpass
 apt install ansible
 
@@ -27,6 +28,8 @@ for (( i=1; i<=server_count; i++ )); do
     echo "Check your $i server password: " $password
     echo "[server_$i]" >> ./dir_to_ignore/hosts.txt
     echo "$hostname ansible_host=$ip_address ansible_user=root ansible_password=${password} ansible_connection=ssh" >> ./dir_to_ignore/hosts.txt
+   # alias $hostname="ssh -i $HOME/.ssh/setup/$hostname root@$ip_address"
+   # echo "$hostname" >> ./hostnames
     unset ip_address
     unset password
     unset hostname
@@ -48,4 +51,5 @@ chmod 700 $HOME/.ssh/setup/
 chmod 600 $HOME/.ssh/setup/*
 rm -rf ./dir_to_ignore/
 
-grep -v "*.pub" /$HOME/.ssh/setup/
+# final message
+echo "Setup is complete! Your SSH keys are stored in $HOME/.ssh/setup/"
