@@ -17,22 +17,25 @@ apt install sshpass
 apt install ansible
 
 # data aggregation
-echo -e "${CYAN} Welcome to the VM Basic Setup Script!"
+echo -e "${CYAN}"
 read -p "How many servers you want to create?" server_count
 echo -e "${NC}"
 #echo "You want to create "$server_count" servers"
 
 for (( i=1; i<=server_count; i++ )); do
-    echo "Configuring server $i ..."
-    read -p '${CYAN} Enter your $i server hostname: ${NC}' hostname
+    echo -e "${CYAN}Configuring server $i ..."
+    read -p "Enter your $i server hostname:" hostname
+    echo -e "${NC}"
     ssh-keygen -t rsa -b 4096 -f "./dir_to_ignore/$hostname" -N ""
-#    echo "Generated key pair for server $i: server_key_$i and server_key_$i.pub"
+#    echo "Generated key pair for server $i: server_key_$i and server_key_$i.pub"   
 
-    read -p '${CYAN} Enter your $i server ip address: ${NC}' ip_address
-    read -sp '${CYAN} Enter your $i server password: ${NC}' password && echo
-    echo -en '${CYAN} Check your $i server hostname: ${NC}' $YELLOW $hostname $NC
-    echo -en '${CYAN} Check your $i server ip: ${NC}' $YELLOW $ip_address $NC
-    echo -en '${CYAN} Check your $i server password: ${NC}' $YELLOW $password $NC
+    echo -e "${CYAN}"
+    read -p "Enter your $i server ip address: " ip_address
+    read -sp "Enter your $i server password: " password && echo
+    echo -e "${NC}"
+    echo -e "${CYAN} Check your $i server hostname: ${NC}" $YELLOW $hostname $NC
+    echo -e "${CYAN} Check your $i server ip: ${NC}" $YELLOW $ip_address $NC
+    echo -e "${CYAN} Check your $i server password: ${NC}" $YELLOW $password $NC
     echo "[server_$i]" >> ./dir_to_ignore/hosts.txt
     echo "$hostname ansible_host=$ip_address ansible_user=root ansible_password=${password} ansible_connection=ssh" hostname=$hostname>> ./dir_to_ignore/hosts.txt
    # alias $hostname="ssh -i $HOME/.ssh/setup/$hostname root@$ip_address"
@@ -59,4 +62,4 @@ chmod 600 $HOME/.ssh/setup/*
 rm -rf ./dir_to_ignore/
 
 # final message
-echo -en '${CYAN} Setup is complete! Your SSH keys are stored in $HOME/.ssh/setup/${NC}'
+echo -e "${CYAN} Setup is complete! Your SSH keys are stored in $HOME/.ssh/setup/${NC}"
