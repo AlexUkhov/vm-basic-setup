@@ -17,7 +17,9 @@ apt install sshpass
 apt install ansible
 
 # data aggregation
-read -p "${CYAN} How many servers you want to create? ${NC}" server_count
+echo -e "${CYAN} Welcome to the VM Basic Setup Script!"
+read -p "How many servers you want to create?" server_count
+echo -e "${NC}"
 #echo "You want to create "$server_count" servers"
 
 for (( i=1; i<=server_count; i++ )); do
