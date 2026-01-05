@@ -71,32 +71,3 @@
   #  shell: |
   #    sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
   #    systemctl restart sshd
-
-- name: copy ssh keys to local machine
-  hosts: localhost
-  tasks:
-    - name: copy private ssh key to .ssh on local machine
-      fetch:
-        src: ./dir_to_ignore/server_key_1
-        dest: ${HOME}/.ssh/server_key_1
-        flat: yes
-    
-    - name: set permissions on private ssh key
-      file:
-        path: ${HOME}/.ssh/server_key_1
-        owner: ${USER}
-        group: ${USER}
-        mode: '0600'
-
-    - name: copy public ssh key to .ssh on local machine
-      fetch:
-        src: ./dir_to_ignore/server_key_1.pub
-        dest: ${HOME}/.ssh/server_key_1.pub
-        flat: yes
-      
-    - name: set permissions on public ssh key
-      file:
-        path: ${HOME}/.ssh/server_key_1.pub
-        owner: ${USER}
-        group: ${USER}
-        mode: '0600'
