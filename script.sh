@@ -27,7 +27,7 @@ for (( i=1; i<=server_count; i++ )); do
     echo "Check your $i server ip: " $ip_address
     echo "Check your $i server password: " $password
     echo "[server_$i]" >> ./dir_to_ignore/hosts.txt
-    echo "$hostname ansible_host=$ip_address ansible_user=root ansible_password=${password} ansible_connection=ssh" >> ./dir_to_ignore/hosts.txt
+    echo "$hostname ansible_host=$ip_address ansible_user=root ansible_password=${password} ansible_connection=ssh" hostname=$hostname>> ./dir_to_ignore/hosts.txt
    # alias $hostname="ssh -i $HOME/.ssh/setup/$hostname root@$ip_address"
    # echo "$hostname" >> ./hostnames
     unset ip_address
