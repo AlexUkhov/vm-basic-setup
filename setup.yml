@@ -71,3 +71,7 @@
   #  shell: |
   #    sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
   #    systemctl restart sshd
+
+  - name: print access key 
+    debug: 
+      msg: " \n command to access server: ssh -i $HOME/.ssh/setup/{{ hostname }} user@{{ ansible_host }} \n"
