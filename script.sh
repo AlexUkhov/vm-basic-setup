@@ -62,4 +62,4 @@ chmod 600 $HOME/.ssh/setup/*
 rm -rf ./dir_to_ignore/
 
 # final message
-echo -e "${CYAN} Setup is complete! Your SSH keys are stored in $HOME/.ssh/setup/${NC}"
+echo -e "${CYAN} Setup is complete! Commands to access servers are printed in the playbook output. ${NC}"
