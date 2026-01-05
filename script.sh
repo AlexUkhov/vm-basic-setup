@@ -17,7 +17,7 @@ apt install sshpass
 apt install ansible
 
 # data aggregation
-read -p "$BLUE How many servers you want to create? $NC" server_count
+read -p "${BLUE} How many servers you want to create? ${NC}" server_count
 #echo "You want to create "$server_count" servers"
 
 for (( i=1; i<=server_count; i++ )); do
